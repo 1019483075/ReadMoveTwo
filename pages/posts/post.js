@@ -24,18 +24,31 @@ Page({
       url: 'post-detail/post-detail?id='+postId,
     })
   },
+  //swiper中item点击时候的跳转详情页面逻辑onSwiperItemTap
+  onSwiperItemTap:function(event){
+    var postId = event.currentTarget.dataset.postid;
+    wx.navigateTo({
+      url: 'post-detail/post-detail?id=' + postId,
+    })
+  },
+  onSwiperTap:function(event){
+    var postId = event.target.dataset.postid;//是指用来获取标签中的某个属性
+    wx.navigateTo({
+      url: 'post-detail/post-detail?id=' + postId,
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    console.log("onready")
+    //console.log("onready")
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    console.log("onshow")
+   // console.log("onshow")
   },
 
   /**
