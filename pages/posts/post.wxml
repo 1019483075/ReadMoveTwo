@@ -1,0 +1,21 @@
+<import src="post-item/post-item-template.wxml" />
+<view>
+  <swiper indicator-dots="true" autoplay="true" interval="2000">
+    <swiper-item>
+      <image src='/images/wx.png'></image>
+    </swiper-item>
+    <swiper-item>
+      <image src='/images/vr.png'></image>
+    </swiper-item>
+    <swiper-item>
+      <image src='/images/iqiyi.png'></image>
+    </swiper-item>
+  </swiper>
+  <!--wx:key="key"是消除警告的 wx:for-index="idx"是获取索引值-->
+  <block wx:for="{{postList}}" wx:for-item="item" wx:key="key" wx:for-index="idx">
+    <!--is是指声明需要定义的模板 data是模板所需要的参数  点击事件放在view中  不要放在template内-->
+    <view catchtap="onPostTap" data-postId="{{item.postId}}">
+      <template is="postItem" data="{{...item}}"  />
+    </view>
+  </block>
+</view>
