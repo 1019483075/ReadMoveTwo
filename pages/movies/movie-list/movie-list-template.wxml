@@ -4,8 +4,8 @@
   <view class='movie-list-container'>
     <view class='inner-container'>
       <view class='movie-head'>
-        <text class='slogan'>正在热播</text>
-        <view class='more'>
+        <text class='slogan'>{{categoryTitle}}</text>
+        <view class='more' catchtap='onMoreTap'>
           <text class='more-text'>更多</text>
           <image src="/images/icon/arrow-right.png" class='more-img'></image>
         </view>

@@ -1,2 +1,3 @@
 <!--pages/movies/movie-grid/movie-grid-template.wxml-->
+<!--封装电影更多  里面的详情页面组件-->
 <text>pages/movies/movie-grid/movie-grid-template.wxml</text>

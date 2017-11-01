@@ -20,12 +20,12 @@ Page({
     var comingSoonUrl = app.globalData.doubanBase + "/v2/movie/coming_soon" + "?start=0&count=3";
     var top250Url = app.globalData.doubanBase + "/v2/movie/top250" + "?start=0&count=3";//豆瓣电影
     //console.log(top250Url)
-    this.getMovieListData(inTheatersUrl,"inTheaters")//传递关键字用于区分电影类型
-    this.getMovieListData(comingSoonUrl,"comingSoon")
-    this.getMovieListData(top250Url,"top250")
+    this.getMovieListData(inTheatersUrl,"inTheaters","正在热映")//传递关键字用于区分电影类型
+    this.getMovieListData(comingSoonUrl,"comingSoon","即将上映")
+    this.getMovieListData(top250Url,"top250","豆瓣Top250")
   },
   //2.封装函数获取接口请求
-  getMovieListData: function (url, settedKey) {//settedKey是指区分电影类中参数
+  getMovieListData: function (url, settedKey, categoryTitle) {//settedKey是指区分电影类中参数
     var that=this
     wx.request({
       url: url,
@@ -35,7 +35,7 @@ Page({
       },
       success: function (res) {
         //3.请求成功对数据进行处理
-        that.processDoubanData(res.data, settedKey)
+        that.processDoubanData(res.data, settedKey, categoryTitle)//title是指标题
       },
       fail: function (error) {
         // fail
@@ -44,7 +44,7 @@ Page({
     })
   },
   //4.封装处理数据的函数
-  processDoubanData: function (moviesDouBan, settedKey){
+  processDoubanData: function (moviesDouBan, settedKey, categoryTitle){
     var movies=[]
     for (var idx in moviesDouBan.subjects ){
       var subject = moviesDouBan.subjects[idx];
@@ -65,11 +65,18 @@ Page({
     //区分存储的数据
     var readyData={}
     readyData[settedKey]={
-      movies: movies
+      movies: movies,
+      categoryTitle: categoryTitle
     }
     console.log(readyData)
     //将数据存放到data
     this.setData(readyData)
+  },
+  //此处是更多的点击事件   只能写在调用的js里面   本身模板的组件是不支持的
+  onMoreTap:function(event){
+    wx.navigateTo({
+      url: 'more-movie/more-movie',
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
