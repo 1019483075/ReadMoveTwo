@@ -1,3 +1,13 @@
-<text>
-  我是电影组件
-</text>
+<import src="movie-list/movie-list-template.wxml" />
+<view class='container'>
+  <view class="movies-template">
+    <template is="moveListTemplate" data="{{...inTheaters}}"></template>
+  </view>
+  <view class="movies-template">
+    <template is="moveListTemplate" data="{{...comingSoon}}"></template>
+  </view>
+  <view class="movies-template">
+    <template is="moveListTemplate" data="{{...top250}}"></template>
+  </view>
+
+</view>

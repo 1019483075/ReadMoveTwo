@@ -1,7 +1,8 @@
 App({
   globalData: {//用于保存全局
     g_isPlayingMusic: false,//此处指代的是音乐是否被播放
-    g_currentMusicPostId:null//指代的是音乐被哪一个所播放
+    g_currentMusicPostId:null,//指代的是音乐被哪一个所播放
+    doubanBase: "https://api.douban.com",
   },
   /**
    * 当小程序初始化完成时，会触发 onLaunch（全局只触发一次）
