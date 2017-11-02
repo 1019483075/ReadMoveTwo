@@ -8,7 +8,9 @@ Page({
   data: {
     inTheaters :{},//正在热映
     comingSoon:{},//即将上映
-    top250:{}
+    top250:{},
+    containerShow:true,//控制电影页面的显示与隐藏的开关按钮   刚开始是显示的
+    searchPanelShow: false,//控制搜索页面的显示与隐藏的开关按钮  刚开始是隐藏的
   },
 
   /**
@@ -82,6 +84,28 @@ Page({
     wx.navigateTo({
       url: 'more-movie/more-movie?category=' + category,
     })
+  },
+  //搜索框的聚焦事件
+  onBindFocus: function (event) {
+    this.setData({
+      containerShow:false,
+      searchPanelShow:true
+    })
+  },
+  //点击电影搜索框  去掉电影详情页
+  onCancelImgTap:function(event){
+    this.setData({
+      containerShow: true,
+      searchPanelShow: false
+    })
+  },
+  //搜索框的失去焦点事件
+  onBindBlur:function(){
+    console.log('失去焦点')
+  },
+  //使用onBindChange 来获取数据
+  onBindChange:function(event){
+    //首先获取输入框的变量值
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
