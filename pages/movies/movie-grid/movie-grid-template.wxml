@@ -1,3 +1,12 @@
 <!--pages/movies/movie-grid/movie-grid-template.wxml-->
 <!--封装电影更多  里面的详情页面组件-->
-<text>pages/movies/movie-grid/movie-grid-template.wxml</text>
+<import src="../movie/movie-template.wxml" />
+<template name="movieGridTemplate">
+  <scroll-view scroll-y="true" scroll-x="false"  bindscrolltolower="onScrollLower"  class='grid-container'>
+    <block wx:for="{{movies}}" wx:for-item="movie" wx:key="key">
+      <view class='single-view-container'>
+        <template is="movieTemplate" data="{{...movie}}"></template>
+      </view>
+    </block>
+  </scroll-view>
+</template>

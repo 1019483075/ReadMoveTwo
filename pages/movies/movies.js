@@ -15,7 +15,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    //1.获取数据url
+    //1.获取数据url start是指起始加载的位置  count是指加载的数量
     var inTheatersUrl = app.globalData.doubanBase + "/v2/movie/in_theaters" + "?start=0&count=3";
     var comingSoonUrl = app.globalData.doubanBase + "/v2/movie/coming_soon" + "?start=0&count=3";
     var top250Url = app.globalData.doubanBase + "/v2/movie/top250" + "?start=0&count=3";//豆瓣电影
@@ -49,8 +49,8 @@ Page({
     for (var idx in moviesDouBan.subjects ){
       var subject = moviesDouBan.subjects[idx];
       var title=subject.title;
-      if(title.length>=9){
-        title = title.substring(0,9)+"...";
+      if(title.length>=7){
+        title = title.substring(0,7)+"...";
       }
       var temp={
         stars: util.convertToStarsArray(subject.rating.stars),//星星评分
@@ -71,11 +71,16 @@ Page({
     console.log(readyData)
     //将数据存放到data
     this.setData(readyData)
+
+
   },
   //此处是更多的点击事件   只能写在调用的js里面   本身模板的组件是不支持的
   onMoreTap:function(event){
+    //当前电影的电影类型  event.currentTarget.dataset是指获取data-xx里面的属性
+    var category = event.currentTarget.dataset.category;
+   // console.log(category)
     wx.navigateTo({
-      url: 'more-movie/more-movie',
+      url: 'more-movie/more-movie?category=' + category,
     })
   },
   /**
