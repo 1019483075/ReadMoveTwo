@@ -38,10 +38,10 @@ Page({
 
     //在onload中不是异步的去执行一个数据绑定，则不需要使用this.setData()方法
     // this.data.postData = postData//此处的this.data类似于setData都是讲获取的数据存放到data里面[]&& app.globalData.g_currentMusicPostId === postId
-    if (app.globalData.g_isPlayingMusic ){//如果我全局绑定的变量为真就去改变我本地的变量
-     // this.data.isPlayingMusic=true
+    if (app.globalData.g_isPlayingMusic) {//如果我全局绑定的变量为真就去改变我本地的变量
+      // this.data.isPlayingMusic=true
       this.setData({
-        isPlayingMusic:true
+        isPlayingMusic: true
       })
     }
     this.setMusicMonitor()
@@ -54,9 +54,9 @@ Page({
         isPlayingMusic: true
       })
       //改变全局开关变量
-      app.globalData.g_isPlayingMusic=true
+      app.globalData.g_isPlayingMusic = true
       //app.globalData.g_currentMusicPostId = this.data.currentPostId;
-    })
+    });
     //监听暂停状态
     wx.onBackgroundAudioPause(function () {
       that.setData({
@@ -65,7 +65,14 @@ Page({
       //改变全局开关变量
       app.globalData.g_isPlayingMusic = false
       //app.globalData.g_currentMusicPostId=null
-    })
+    });
+    //当音乐播放结束  音乐icon会显示为关闭状态
+    wx.onBackgroundAudioPause(function () {
+      that.setData({
+        isPlayingMusic: false
+      })
+      app.globalData.g_isPlayingMusic = false;
+    });
   },
   onColletionTap: function (event) {//给收藏图片添加的点击事件
     // var postsCollected = wx.getStorageSync('posts_Collected')
@@ -155,7 +162,7 @@ Page({
       success: function (res) {
         wx.showModal({
           title: '用户' + itemList[res.tapIndex],
-          content: "用户是否取消？" +"现在无法实现分享功能，什么时候能支持呢"
+          content: "用户是否取消？" + "现在无法实现分享功能，什么时候能支持呢"
         })
       }
     })
@@ -165,7 +172,7 @@ Page({
     var isPlayingMusic = this.data.isPlayingMusic;//拿到音乐播放状态
     var currentPostId = this.data.currentPostId//点击当前文章的索引值
     var postData = postsData.postList[currentPostId]//提取下当前点击音乐在列表中对应的索引值
-   // console.log(currentPostId)
+    // console.log(currentPostId)
     if (isPlayingMusic) {//给音乐一个开关按钮判断是开启还是暂停  判断isPlayingMusic为true的时候执行里面的任务
       wx.pauseBackgroundAudio()
       this.setData({

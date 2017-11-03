@@ -1,4 +1,4 @@
-var util=require('../../utils/util.js')
+var util = require('../../utils/util.js')
 var app = getApp()//是指获取app.js的调用方法
 Page({
 
@@ -6,11 +6,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    inTheaters :{},//正在热映
-    comingSoon:{},//即将上映
-    top250:{},
-    containerShow:true,//控制电影页面的显示与隐藏的开关按钮   刚开始是显示的
+    inTheaters: {},//正在热映
+    comingSoon: {},//即将上映
+    top250: {},
+    containerShow: true,//控制电影页面的显示与隐藏的开关按钮   刚开始是显示的
     searchPanelShow: false,//控制搜索页面的显示与隐藏的开关按钮  刚开始是隐藏的
+    searchResult:{}
   },
 
   /**
@@ -22,13 +23,13 @@ Page({
     var comingSoonUrl = app.globalData.doubanBase + "/v2/movie/coming_soon" + "?start=0&count=3";
     var top250Url = app.globalData.doubanBase + "/v2/movie/top250" + "?start=0&count=3";//豆瓣电影
     //console.log(top250Url)
-    this.getMovieListData(inTheatersUrl,"inTheaters","正在热映")//传递关键字用于区分电影类型
-    this.getMovieListData(comingSoonUrl,"comingSoon","即将上映")
-    this.getMovieListData(top250Url,"top250","豆瓣Top250")
+    this.getMovieListData(inTheatersUrl, "inTheaters", "正在热映")//传递关键字用于区分电影类型
+    this.getMovieListData(comingSoonUrl, "comingSoon", "即将上映")
+    this.getMovieListData(top250Url, "top250", "豆瓣Top250")
   },
   //2.封装函数获取接口请求
   getMovieListData: function (url, settedKey, categoryTitle) {//settedKey是指区分电影类中参数
-    var that=this
+    var that = this
     wx.request({
       url: url,
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
@@ -46,15 +47,15 @@ Page({
     })
   },
   //4.封装处理数据的函数
-  processDoubanData: function (moviesDouBan, settedKey, categoryTitle){
-    var movies=[]
-    for (var idx in moviesDouBan.subjects ){
+  processDoubanData: function (moviesDouBan, settedKey, categoryTitle) {
+    var movies = []
+    for (var idx in moviesDouBan.subjects) {
       var subject = moviesDouBan.subjects[idx];
-      var title=subject.title;
-      if(title.length>=7){
-        title = title.substring(0,7)+"...";
+      var title = subject.title;
+      if (title.length >= 7) {
+        title = title.substring(0, 7) + "...";
       }
-      var temp={
+      var temp = {
         stars: util.convertToStarsArray(subject.rating.stars),//星星评分
         title: title,//列表名称
         average: subject.rating.average,//评分
@@ -65,8 +66,8 @@ Page({
       movies.push(temp)
     }
     //区分存储的数据
-    var readyData={}
-    readyData[settedKey]={
+    var readyData = {}
+    readyData[settedKey] = {
       movies: movies,
       categoryTitle: categoryTitle
     }
@@ -77,10 +78,10 @@ Page({
 
   },
   //此处是更多的点击事件   只能写在调用的js里面   本身模板的组件是不支持的
-  onMoreTap:function(event){
+  onMoreTap: function (event) {
     //当前电影的电影类型  event.currentTarget.dataset是指获取data-xx里面的属性
     var category = event.currentTarget.dataset.category;
-   // console.log(category)
+    // console.log(category)
     wx.navigateTo({
       url: 'more-movie/more-movie?category=' + category,
     })
@@ -88,24 +89,30 @@ Page({
   //搜索框的聚焦事件
   onBindFocus: function (event) {
     this.setData({
-      containerShow:false,
-      searchPanelShow:true
+      containerShow: false,
+      searchPanelShow: true
     })
   },
   //点击电影搜索框  去掉电影详情页
-  onCancelImgTap:function(event){
+  onCancelImgTap: function (event) {
     this.setData({
       containerShow: true,
       searchPanelShow: false
+      //searchResult:{}
     })
   },
   //搜索框的失去焦点事件
-  onBindBlur:function(){
-    console.log('失去焦点')
-  },
-  //使用onBindChange 来获取数据
-  onBindChange:function(event){
+  // onBindBlur: function () {
+  //   // console.log('失去焦点')
+  // },
+  //使用onBindChange 来获取数据  bindChange是可以时时监听的
+  onBindBlur: function (event) {
     //首先获取输入框的变量值
+    var text = event.detail.value;
+    var searchUrl = app.globalData.doubanBase + "/v2/movie/search?q=" + text;
+    this.getMovieListData(searchUrl,'searchResult','');
+
+    //console.log(text)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

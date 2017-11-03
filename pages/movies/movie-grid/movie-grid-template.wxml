@@ -2,7 +2,6 @@
 <!--封装电影更多  里面的详情页面组件-->
 <import src="../movie/movie-template.wxml" />
 <template name="movieGridTemplate">
-<text>搜索</text>
   <scroll-view scroll-y="true" scroll-x="false"  bindscrolltolower="onScrollLower"  class='grid-container'>
     <block wx:for="{{movies}}" wx:for-item="movie" wx:key="key">
       <view class='single-view-container'>
