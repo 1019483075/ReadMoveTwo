@@ -1,7 +1,8 @@
 <import src="../stars/stars-template.wxml" />
 <!--pages/movies/movie/movie-template.wxml-->
+<!--电影单个 图片 信息 星星 movieId是指获取当前单个电影的id信息  用于区分-->
 <template name="movieTemplate">
-  <view class='movie-container'>
+  <view class='movie-container' catchtap="onMovieTap" data-movieId="{{movieId}}">
     <image src='{{coverageUrl}}' class='movie-img'></image>
     <text class='movie-title'>{{title}}</text>
     <template is="starsTemplate" data="{{stars:stars, score:average}}"></template>

@@ -8,7 +8,8 @@
     "pages/movies/movie/movie-template",
     "pages/movies/movie-grid/movie-grid-template",
     "pages/movies/stars/stars-template",
-    "pages/movies/more-movie/more-movie"
+    "pages/movies/more-movie/more-movie",
+    "pages/movies/movie-detail/movie-detail"
   ],
   "window": {
     "navigationBarBackgroundColor": "#405f80"

@@ -11,7 +11,7 @@ Page({
     top250: {},
     containerShow: true,//控制电影页面的显示与隐藏的开关按钮   刚开始是显示的
     searchPanelShow: false,//控制搜索页面的显示与隐藏的开关按钮  刚开始是隐藏的
-    searchResult:{}
+    searchResult: {}
   },
 
   /**
@@ -86,6 +86,14 @@ Page({
       url: 'more-movie/more-movie?category=' + category,
     })
   },
+  //单个movie的跳转事件
+  onMovieTap: function (event) {
+    //此处用event.currentTarget获取的data属性  只能是小写  不能用驼峰命名法
+    var movieId = event.currentTarget.dataset.movieid;
+    wx.navigateTo({
+      url: "movie-detail/movie-detail?id=" + movieId
+    })
+  },
   //搜索框的聚焦事件
   onBindFocus: function (event) {
     this.setData({
@@ -110,10 +118,11 @@ Page({
     //首先获取输入框的变量值
     var text = event.detail.value;
     var searchUrl = app.globalData.doubanBase + "/v2/movie/search?q=" + text;
-    this.getMovieListData(searchUrl,'searchResult','');
+    this.getMovieListData(searchUrl, 'searchResult', '');
 
     //console.log(text)
   },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

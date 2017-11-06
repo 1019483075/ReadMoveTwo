@@ -46,10 +46,12 @@ Page({
     wx.showNavigationBarLoading()
   },
   //下拉刷新技术
-  onPullDownRefresh:function(event){
-    var refreshUrl = this.data.requestUrl +"?start=0&count=20";
-    this.data.movies={}
-    this.data.isEmpty=true
+  onPullDownRefresh: function (event) {
+    var refreshUrl = this.data.requestUrl + "?start=0&count=20";
+    this.data.movies = {}
+    this.data.isEmpty = true
+    //
+    this.data.totalCount = 0
     util.http(refreshUrl, this.processDoubanData, 'GET')
     wx.showNavigationBarLoading()
   },
@@ -100,6 +102,12 @@ Page({
       title: this.data.navigateTitle,//如何拿到onready生命周期的值
       success: function (res) { }
     })
-  }
+  },
+  onMovieTap: function (event) {
+    var movieId = event.currentTarget.dataset.movieid;
+    wx.navigateTo({
+      url: '../movie-detail/movie-detail?id=' + movieId
+    })
+  },
 
 })
